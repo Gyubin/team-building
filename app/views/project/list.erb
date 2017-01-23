@@ -1,90 +1,35 @@
-<div id="wrapper">
-
-  <!-- Sidebar -->
-  <div id="sidebar-wrapper">
-      <ul class="sidebar-nav">
-          <li class="sidebar-brand">
-              <a href="#">
-                  Team Building World
-              </a>
-          </li>
-          <li>
-              <a href="#">프로젝트</a>
-          </li>
-          <li>
-              <a href="#">올리기</a>
-          </li>
-          <li>
-              <a href="#">좋아요 보기</a>
-          </li>
-          <li>
-              <a href="#" data-toggle="modal" data-target="#myModal">로그인</a>
-          </li>
-      </ul>
+<div class="container" style="position:relative">
+  <div class="row row-centered">
+  <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" style="float:right" onclick="location.href='/user/join';">회원가입</button>
   </div>
-  <!-- /#sidebar-wrapper -->
-  
-  <!-- hamburger svg -->
-  <div id="hamburger" class="hamburglar is-closed" >
-    <div class="burger-icon">
-      <div class="burger-container">
-        <span class="burger-bun-top"></span>
-        <span class="burger-filling"></span>
-        <span class="burger-bun-bot"></span>
+
+  <!-- 데이터베이스에서 불러와 반복하여 뿌려줄 프로젝트 정보 -->
+  <% @projects.each do |p| %>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <div class="picture-thumbnail">
+          <img src="<%=p.picture%>" alt="Bootstrap Thumbnail Customization" width="100%">
+        </div>
+        <div class="caption">
+          <h3><%=p.title%></h3>
+          <p class="card-description"><%=p.content%></p>
+          <p id="count"><%=p.online%>명</p>
+          <p><a href="/project/detail/<%=p.id%>" class="btn btn-primary" role="button">자세히 보기</a></p>
+        </div>
       </div>
     </div>
- 		<svg width="0" height="0">
-      <mask id="mask">
-        <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="4" d="M 34 2 c 11.6 0 21.8 6.2 27.4 15.5 c 2.9 4.8 5 16.5 -9.4 16.5 h -4" />
-      </mask>
-    </svg>
-  </div>
-  <!-- /#hamburger svg -->
-  
-  <div id="page-content-wrapper">
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-lg-12">
-                  <h1>Project list</h1>
-                  <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                  <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!-- /#page-content-wrapper -->
-  
+  <% end %>
+  <!-- 끝 -->
 </div>
-<!-- /#wrapper -->
 
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
-
-<!-- Menu Toggle Script -->
-<script>
-    $('document').ready(function () {
-    var trigger = $('#hamburger'),
-        isClosed = false;
-    
-    trigger.click(function () {
-      burgerTime();
-    });
-
-    function burgerTime() {
-      if (isClosed == true) {
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-      $("#wrapper").toggleClass("toggled");
-    }
-
-  });
-</script>
+<!-- /#page-content-wrapper -->
+<% if session["user_username"].nil? %>
+  <div class="container" style="position:relative">
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">로그인</button>
+  </div>
+<% else %>
+  <h2>profile</h2>
+<% end %>
+      

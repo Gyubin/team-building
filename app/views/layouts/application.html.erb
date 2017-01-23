@@ -1,14 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Workspace</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.2.0/css/mdb.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.2.0/js/mdb.min.js"></script>
 </head>
 <body>
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+          <a href="/">Team Building World</a>
+        </li>
+        <li>
+          <a href="#">프로젝트 보기</a>
+        </li>
+        <% if session["user_username"].nil? %>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#myModal">로그인</a>
+        </li>
+        <% else %>
+        <li>
+          <a href="/project/upload">올리기</a>
+        </li>
+        <li>
+          <a href="#">좋아요 보기</a>
+        </li>
+        <li>
+          <a href="/user/update">회원정보</a>
+        </li>
+        <li>
+          <a href="/user/logout">로그아웃</a>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+    
+    <!-- hamburger svg -->
+    <div id="hamburger" class="hamburglar is-closed" >
+      <div class="burger-icon">
+        <div class="burger-container">
+          <span class="burger-bun-top"></span>
+          <span class="burger-filling"></span>
+          <span class="burger-bun-bot"></span>
+        </div>
+      </div>
+      
+      <!-- the masked path that animates the fill to the ring -->
+   		<svg width="0" height="0">
+        <mask id="mask">
+          <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="4" d="M 34 2 c 11.6 0 21.8 6.2 27.4 15.5 c 2.9 4.8 5 16.5 -9.4 16.5 h -4" />
+        </mask>
+      </svg>
+      <div class="path-burger">
+        <div class="animate-path">
+          <div class="path-rotation"></div>
+        </div>
+      </div>
+    </div>
+    <!-- /hamburger svg -->
+    
+    <section>
+      <%= yield %>
+    </section>
+    
+  </div>
+  <!-- /#wrapper -->
+  
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">ID와 PW를 입력해주세요.</h4>
+          </div>
+          <form action="/user/login_process" method="POST">
+            <div class="modal-body">
+              ID : <input type="text" name="username"><br/>
+              PW : <input type="password" name="password"><br/>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-lg btn-default btn-group-justified" >로그인</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-<%= yield %>
-
+  <!-- Menu Toggle Script -->
+  <script>
+    $('document').ready(function () {
+      var trigger = $('#hamburger'),
+          isClosed = false;
+      
+      trigger.click(function () {
+        burgerTime();
+      });
+  
+      function burgerTime() {
+        if (isClosed == true) {
+          trigger.removeClass('is-open');
+          trigger.addClass('is-closed');
+          isClosed = false;
+        } else {
+          trigger.removeClass('is-closed');
+          trigger.addClass('is-open');
+          isClosed = true;
+        }
+        $("#wrapper").toggleClass("toggled");
+      }
+    });
+  </script>
 </body>
 </html>
+
+
