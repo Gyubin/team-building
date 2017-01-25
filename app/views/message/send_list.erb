@@ -1,0 +1,71 @@
+<div class="container" style="position:relative">
+<!--body start-->
+<% if @messages.empty? %>
+<div class="row row-centered">
+  	</br>
+  	</br>
+  	<div class="col-xs-12 col-sm-12 col-md-10 col-lg-9 col-centered">
+  		<div class="form-group form-inline">
+  			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-9 col-centered">
+		      <label>보낸 쪽지가 없습니다.</label>
+		    </div>
+		  </div>
+		</div>
+</div>
+		   
+<% else %>
+<div class="row row-centered">
+  	</br>
+  	</br>
+  	
+	  <div class="col-xs-12 col-sm-12 col-md-10 col-lg-9 col-centered">
+	    <% @messages.each do |m| %>
+	    <div class="form-group form-inline">
+		    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-centered">
+		      <label>to :</label>
+		    </div>
+		    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-centered">
+		      <label><%= User.find(m.recv_id).username %></label>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group form-inline">
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-centered">
+				  <label>content :</label>
+				</div>
+				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-centered">
+				  <label><%= m.content %></label>
+				</div>
+		  </div>
+		  
+		  <div class="form-group form-inline">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered">
+				  <a href="#" data-toggle="modal" data-target="#myModal<%= m.id %>" class="btn btn-lg btn-default btn-group-justified" >쪽지 보내기</a>
+				</div>
+			</div>
+				<!-- Modal -->
+	    <div class="modal fade" id="myModal<%= m.id %>" role="dialog">
+	      <div class="modal-dialog modal-sm">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal">&times;</button>
+	            <h4 class="modal-title">내용을 입력해주세요.</h4>
+	          </div>
+	          <form action="/message/reply" method="POST">
+	            <div class="modal-body">
+	              <textarea name="content"></textarea><br/>
+	              <input type="hidden" name="recv_id" value="<%= m.recv_id %>">
+	            </div>
+	            <div class="modal-footer">
+	              <button type="submit" class="btn btn-lg btn-default btn-group-justified" >보내기</button>
+	            </div>
+	          </form>
+	        </div>
+	      </div>
+	    </div>
+			
+			<% end %>
+			</div>
+</div>
+<% end %>
+</div>

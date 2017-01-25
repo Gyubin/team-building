@@ -1,6 +1,53 @@
 <div class="jumbotron">
   <img src="<%=@project.picture%>" width="100%">
   <h1><%=@project.title%></h1>
-  <p class="lead"><%=@project.content%></p>
+  <p class="lead"><%= simple_format @project.content.gsub("\r\n",'<br>') %></p>
+  <% if @project.writer == session["user_username"].to_i %>
+    <p><a href="/project/modify/<%=@project.id%>" class="btn btn-primary" role="button">수정</a></p>
+    <p><a href="/project/destroy/<%=@project.id%>" class="btn btn-primary" role="button">삭제</a></p>
+  <% else %>
+    <p>
+      글쓴이 : <a href="/user/show/<%= @project.writer %>"><%= User.find(@project.writer).username %></a>&nbsp;&nbsp;
+      <a href="#" data-toggle="modal" data-target="#messageModal" class="btn btn-primary" role="button">쪽지 보내기</a>
+    </p>
+  <% end %>
   <p id="count"><%=@project.online%> 명</p>
+  <%=form_tag "/project/comment_upload", method: "POST" do %>
+    <div class="form-group">
+      <input type="text" class="form-control" name="content" placeholder="댓글을 입력해주세요.">
+      <button type="submit" class="btn btn-lg btn-default btn-group-justified">댓글 달기</button>
+      <input type ="hidden" name="project_id" value="<%= @project.id %>">
+    </div>
+   
+  <% end %>
+  <% @comments.each do |c| %>
+  <p>
+    <a href="/user/show/<%= c.writer %>"><%= User.find(c.writer).username %></a>&nbsp; : &nbsp;
+    <%=c.content%>&nbsp;&nbsp;
+    <% if session["user_username"].to_i == c.writer %>
+      <a href="/project/comment_destroy/<%= c.id %>" class="btn btn-primary" role="button">삭제</a>
+    <% end %>
+  </p>
+  <% end %>
 </div>
+
+<!-- Modal -->
+    <div class="modal fade" id="messageModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">내용을 입력해주세요.</h4>
+          </div>
+          <form action="/message/create" method="POST">
+            <div class="modal-body">
+              <textarea name="content"></textarea><br/>
+              <input type="hidden" name="recv_id" value="<%= @project.writer %>">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-lg btn-default btn-group-justified" >보내기</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>

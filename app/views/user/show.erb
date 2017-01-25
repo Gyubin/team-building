@@ -1,0 +1,82 @@
+<div class="container" style="position:relative">
+<!--body start-->
+<div class="row row-centered">
+  	</br>
+  	</br>
+  	
+	  <div class="col-xs-12 col-sm-12 col-md-10 col-lg-9 col-centered">
+	    <div class="form-group form-inline">
+		    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-centered">
+		      <h3>ID :</h3>
+		    </div>
+		    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-centered">
+		      <h3><%= @user.username %></h3>
+		    </div>
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-centered">
+		      <h3>Univ :</h3>
+		    </div>
+		    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-centered">
+		      <h3><%= @user.university %></h3>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group form-inline">
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-centered">
+				  <h3>major :</h3>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-centered">
+				  <h3><%= @user.major %></h3>
+				</div>
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-centered">
+				  <h3>email :</h3>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-centered">
+				  <h3><%= @user.email %></h3>
+				</div>
+		  </div>
+		  
+		  <div class="form-group form-inline">
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-centered">
+				  <h3>sex :</h3>
+				</div>
+			  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-centered">
+				  <h3><%= @user.isMale %></h3>
+				</div>
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-centered">
+				  <h3>info :</h3>
+				</div>
+			  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-centered">
+				  <h3><%= @user.introduction %></h3>
+				</div>
+			</div>
+			</div>
+			
+			<div class="form-group form-inline">
+			  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered">
+			    <a href="#" data-toggle="modal" data-target="#messageModal" class="btn btn-lg btn-default btn-group-justified" >쪽지 보내기</a>
+			  </div>
+			</div>
+			
+</div>
+</div>
+
+<!-- Modal -->
+    <div class="modal fade" id="messageModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">내용을 입력해주세요.</h4>
+          </div>
+          <form action="/message/create" method="POST">
+            <div class="modal-body">
+              <textarea name="content"></textarea><br/>
+              <input type="hidden" name="recv_id" value="<%= @user.id %>">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-lg btn-default btn-group-justified" >보내기</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>

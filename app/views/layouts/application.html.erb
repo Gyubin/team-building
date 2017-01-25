@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Workspace</title>
+  <title>Team Building World</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -12,18 +12,62 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.2.0/js/mdb.min.js"></script>
 </head>
 <body>
+  <!-- hamburger svg -->
+  <div id="hamburger" class="hamburglar is-closed" >
+    <div class="burger-icon">
+      <div class="burger-container">
+        <span class="burger-bun-top"></span>
+        <span class="burger-filling"></span>
+        <span class="burger-bun-bot"></span>
+      </div>
+    </div>
+    
+    <!-- the masked path that animates the fill to the ring -->
+ 		<svg width="0" height="0">
+      <mask id="mask">
+        <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="4" d="M 34 2 c 11.6 0 21.8 6.2 27.4 15.5 c 2.9 4.8 5 16.5 -9.4 16.5 h -4" />
+      </mask>
+    </svg>
+    <div class="path-burger">
+      <div class="animate-path">
+        <div class="path-rotation"></div>
+      </div>
+    </div>
+  </div>
+  <!-- /hamburger svg -->
+  
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">
+          <span id="logo-text">Team Building World</span>
+          <span id="logo-text-abbr">TBW</span>
+        </a>
+      </div>
+      <% if session["user_username"].nil? %>
+      <button type="button" id="login-btn" class="btn btn-default navbar-btn pull-right" style="background: #000000;" data-toggle="modal" data-target="#myModal">로그인</button>
+      <button type="button" id="join-btn" class="btn btn-default navbar-btn pull-right" style="background: #000000;" onclick="location.href='/user/join';">회원 가입</button>
+      <% else %>
+      <button type="button" id="logout-btn" class="btn btn-default navbar-btn pull-right" style="background: #000000;" onClick="location.href='/user/logout';">로그아웃</button>
+      <% end %>
+    </div>
+  </nav>
+  
   <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
-        <li class="sidebar-brand">
-          <a href="/">Team Building World</a>
+        <li>
+          <a href="/project/list">프로젝트 보기</a>
         </li>
         <li>
-          <a href="#">프로젝트 보기</a>
+          <a href="/profile/intro">소개글</a>
         </li>
         <% if session["user_username"].nil? %>
-        <li>
+        <li id="join-li">
+          <a href="/user/join">회원가입</a>
+        </li>
+        <li id="login-li">
           <a href="#" data-toggle="modal" data-target="#myModal">로그인</a>
         </li>
         <% else %>
@@ -31,12 +75,18 @@
           <a href="/project/upload">올리기</a>
         </li>
         <li>
-          <a href="#">좋아요 보기</a>
+          <a href="/project/heart_list">좋아요 보기 <img src="/assets/star_o"></a>
         </li>
         <li>
           <a href="/user/update">회원정보</a>
         </li>
         <li>
+          <a href="/message/recv_list">받은 쪽지함</a>
+        </li>
+        <li>
+          <a href="/message/send_list">보낸 쪽지함</a>
+        </li>
+        <li id="logout-li">
           <a href="/user/logout">로그아웃</a>
         </li>
         <% end %>
@@ -44,31 +94,7 @@
     </div>
     <!-- /#sidebar-wrapper -->
     
-    <!-- hamburger svg -->
-    <div id="hamburger" class="hamburglar is-closed" >
-      <div class="burger-icon">
-        <div class="burger-container">
-          <span class="burger-bun-top"></span>
-          <span class="burger-filling"></span>
-          <span class="burger-bun-bot"></span>
-        </div>
-      </div>
-      
-      <!-- the masked path that animates the fill to the ring -->
-   		<svg width="0" height="0">
-        <mask id="mask">
-          <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="4" d="M 34 2 c 11.6 0 21.8 6.2 27.4 15.5 c 2.9 4.8 5 16.5 -9.4 16.5 h -4" />
-        </mask>
-      </svg>
-      <div class="path-burger">
-        <div class="animate-path">
-          <div class="path-rotation"></div>
-        </div>
-      </div>
-    </div>
-    <!-- /hamburger svg -->
-    
-    <section>
+    <section class="sub-page">
       <%= yield %>
     </section>
     
@@ -76,7 +102,7 @@
   <!-- /#wrapper -->
   
     <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="myModal" role="dialog">..
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">

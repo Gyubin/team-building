@@ -1,0 +1,9 @@
+<%= render :partial => "/home/common" %>
+def join_process
+  u = User.new
+  u.username = params[:username] 
+  u.password = params[:password]
+  u.save
+   
+  redirect_to '/home/index'
+end

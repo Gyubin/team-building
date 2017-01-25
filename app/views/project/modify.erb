@@ -1,0 +1,22 @@
+<div class="jumbotron">
+  <h2 style="font-weight:bold; margin-top:0px;">수정하기</h2>
+
+  <%=form_tag "/project/modify_process", method: "POST" do %>
+    <div class="form-group">
+      <label for="title">제목</label>
+      <input type="text" class="form-control" name="title" value="<%= @project.title %>">
+    </div>
+    <div class="form-group">
+      <label for="picture">이미지 주소</label>
+      <input type="text" class="form-control" name="picture" value="<%= @project.picture %>">
+    </div>
+    <div class="form-group">
+      <label for="content">본문</label>
+      <textarea class="form-control" name="content" rows=10><%=@project.content %></textarea>
+    </div>
+    <input type="hidden" name="id" value="<%= @project.id %>"> 
+    <br>
+    <button type="submit" class="btn btn-lg btn-default btn-group-justified">수정하기</button>
+  <% end %> 
+   
+</div>

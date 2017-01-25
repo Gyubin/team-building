@@ -1,10 +1,9 @@
-<!-- <%= render :partial => "/home/common" %>
+<%= render :partial => "/home/common" %>
 현재 로그인 사용자 : <%= @username %>
 IP : <%= @cnt.ip_address %>
 전체 방문자 : <%= @total_view_count %>
 <%if session[:user_id].nil? %>
 <h2><a href="/home/login">로그인 하러 가기</a></h2>
-<% else %>
+<% else %> 
 <h2><a href="/home/logout">로그아웃 하러 가기</a></h2>
-<%end%>
--->
+<%end%> 

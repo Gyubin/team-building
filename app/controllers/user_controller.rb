@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+  include ApplicationHelper
+  
   def join
   end
   
@@ -13,7 +15,6 @@ class UserController < ApplicationController
     user.email = params[:email]
     user.save
     
-    session["user_username"] = user.id
     redirect_to '/project/list'
   end
   
@@ -49,6 +50,26 @@ class UserController < ApplicationController
     user.save
     
     session["user_username"] = user.id
+    redirect_to '/project/list'
+  end
+  
+  def show
+    @user = User.find(params[:id])
+  end
+  
+  def heart_share
+    heart = Heart.new 
+    heart.user_id = session["user_username"]
+    heart.project_id = params["id"]
+    heart.save
+    
+    redirect_to '/project/list'
+  end
+  
+  def heart_destroy
+    heart = Heart.where(:project_id => params["id"], :user_id => session["user_username"]).take
+    heart.destroy
+    
     redirect_to '/project/list'
   end
 end

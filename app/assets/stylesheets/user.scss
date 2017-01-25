@@ -6,3 +6,92 @@
   height: 200px;
   overflow: hidden;
 }
+
+.navbar {
+  margin-bottom: 0;
+}
+
+div#wrapper {
+  position: relative;
+  top: 70px;
+}
+
+#logo-text {
+  font-weight: bold;
+  font-size: 25px;
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+
+#logo-text-abbr {
+  font-weight: bold;
+  font-size: 25px;
+  margin-left: 36px;
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+}
+
+#join-btn, #login-btn, #logout-btn {
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+
+#login-li, #join-li, #logout-li {
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+}
+
+div.card-obj {
+  //height: 0.4vh;
+}
+div.card-title {
+  padding-left: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  height: 1.5em;
+  overflow: hidden;
+}
+
+div.star-container {
+  width: 30px;
+}
+
+img.star {
+  width: 100%;
+  height: 100%;
+}
+
+p.card-description {
+  max-height: 120px;
+  min-height: 120px;
+  overflow: scroll;
+}
+
+p#count {
+  color: blue;
+}
+
+div#intro {
+  padding: 20px;
+}
+
+img#intro-img {
+  max-height: 40vh;
+  max-width: 100%;
+}
+
+input.form-control {
+  margin-top: -10px;
+}
+
+div.form-group {
+  margin-bottom: 10px;
+}
+
+div.jumbotron {
+  padding-top: 10px;
+}

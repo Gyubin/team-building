@@ -1,35 +1,39 @@
-<div class="container" style="position:relative">
-  <div class="row row-centered">
-  <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" style="float:right" onclick="location.href='/user/join';">회원가입</button>
-  </div>
-
+<div class="container-fluid" style="position:relative">
   <!-- 데이터베이스에서 불러와 반복하여 뿌려줄 프로젝트 정보 -->
   <% @projects.each do |p| %>
-    <div class="col-sm-6 col-md-4">
+    <div class="col-sm-6 col-md-4 card-obj">
       <div class="thumbnail">
         <div class="picture-thumbnail">
-          <img src="<%=p.picture%>" alt="Bootstrap Thumbnail Customization" width="100%">
+          <img src="<%=p.picture%>" alt="project image" width="100%">
         </div>
         <div class="caption">
-          <h3><%=p.title%></h3>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-10 card-title">
+                <p><%=p.title%></p>
+              </div>
+              <div class="col-xs-2">
+                <div class="star-container">
+                  <% unless session["user_username"].nil? %>
+                    <% if Heart.where(:user_id => session["user_username"], :project_id => p.id).take.nil? %>
+                      <a href="/user/heart_share/<%= p.id %>"><img class="star" prj_id="<%=p.id%>" src="/assets/star_x.png"></a>
+                    <% else %>
+                      <a href="/user/heart_destroy/<%= p.id %>"><img class="star" prj_id="<%=p.id%>" src="/assets/star_o.png"></a>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
           <p class="card-description"><%=p.content%></p>
-          <p id="count"><%=p.online%>명</p>
-          <p><a href="/project/detail/<%=p.id%>" class="btn btn-primary" role="button">자세히 보기</a></p>
+          <p id="count">조회수 <%=p.online%></p>
+          <% unless session["user_username"].nil? %>
+          <p><a href="/project/detail/<%=p.id%>" class="btn btn-primary" role="button" style="background-color: #808080;">자세히 보기</a></p>
+          <% end %>
         </div>
       </div>
     </div>
   <% end %>
   <!-- 끝 -->
 </div>
-
-<!-- /#page-content-wrapper -->
-<% if session["user_username"].nil? %>
-  <div class="container" style="position:relative">
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">로그인</button>
-  </div>
-<% else %>
-  <h2>profile</h2>
-<% end %>
       

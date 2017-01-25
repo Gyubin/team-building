@@ -1,4 +1,4 @@
 class ProfileController < ApplicationController
-   def modify
+   def intro
    end
 end

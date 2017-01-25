@@ -6,7 +6,7 @@ class CreateProjects < ActiveRecord::Migration
       t.string :picture
       t.integer :online
       t.integer :writer
-      
+       
       t.timestamps null: false
     end
   end
